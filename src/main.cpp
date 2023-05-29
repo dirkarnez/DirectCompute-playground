@@ -12,6 +12,7 @@
 #define _UNICODE 
 
 #include <stdio.h>
+#include <iostream>
 #include <crtdbg.h>
 #include <d3dcommon.h>
 #include <d3d11.h>
@@ -83,8 +84,10 @@ BufType g_vBuf1[NUM_ELEMENTS];
 //--------------------------------------------------------------------------------------
 // Entry point to the program
 //--------------------------------------------------------------------------------------
-int __cdecl main()
+int main()
 {
+    std::cout << "Hi" << std::endl;
+
     // Enable run-time memory check for debug builds.
 #ifdef _DEBUG
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
