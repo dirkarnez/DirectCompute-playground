@@ -17,8 +17,6 @@ jobs:
   build:
     name: Create Release
     runs-on: windows-latest
-    env:
-      msvc2019TargetZip: or-tools-boilerplate-${{ github.ref_name }}-msvc2019.zip
     steps:
     - uses: actions/checkout@v4
     
@@ -35,9 +33,9 @@ jobs:
         -B./cmake-build &&^
         cd cmake-build && cmake --build . --config Release --target ALL_BUILD -v -- /maxcpucount
         
-    - name: set PATH, check mingw version, cmake generate, build and install
-      shell: cmd
+    - shell: cmd
       run: |
+        cd cmake-build &&^
         dir /S
       
     - name: Archive Release
@@ -45,11 +43,11 @@ jobs:
       with:
         type: 'zip'
         directory: "cmake-build/Release"
-        filename: "${{ github.event.repository.name }}-${{ github.ref_name }}-msvc2026.zip"
+        filename: "${{ github.event.repository.name }}-${{ github.ref_name }}-msvc2022.zip"
       
     - name: Release prebuilt
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "cmake-build/Release/${{ github.event.repository.name }}-${{ github.ref_name }}-msvc2026.zip"
+        artifacts: "cmake-build/Release/${{ github.event.repository.name }}-${{ github.ref_name }}-msvc2022.zip"
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
