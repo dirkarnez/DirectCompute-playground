@@ -8,3 +8,6 @@ From [DirectX-SDK-Samples/C++/Direct3D11/BasicCompute11 at main · microsoft/Dir
 
 ### dlls
 - `C:\Program Files (x86)\Windows Kits\10\Redist\D3D\x64`
+
+### Docs
+- https://developer.download.nvidia.com/compute/DevZone/docs/html/DirectCompute/doc/DirectCompute_Programming_Guide.pdf
