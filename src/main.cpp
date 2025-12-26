@@ -579,7 +579,7 @@ HRESULT FindDXSDKShaderFileCch( WCHAR* strDestPath,
         0
     };
     WCHAR* strLastSlash = nullptr;
-    GetModuleFileName( nullptr, strExePath, MAX_PATH );
+    GetModuleFileNameW( nullptr, strExePath, MAX_PATH );
     strExePath[MAX_PATH - 1] = 0;
     strLastSlash = wcsrchr( strExePath, TEXT( '\\' ) );
     if( strLastSlash )
