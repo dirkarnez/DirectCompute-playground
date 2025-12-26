@@ -26,16 +26,20 @@ jobs:
       run: cmake --version
       
     - name: set PATH, check mingw version, cmake generate, build and install
-      if: ${{ matrix.compiler.url }}
       shell: cmd
       run: |
-          set CD_LINUX=%CD:\=/%
-          cmake.exe -G"Visual Studio 18 2026" ^
-          -DCMAKE_BUILD_TYPE=Release ^
-          -DBUILD_SHARED_LIBS=OFF ^
-          -B./cmake-build &&^
-          cd cmake-build && cmake --build . --config Release --target ALL_BUILD -v -- /maxcpucount
-
+        set CD_LINUX=%CD:\=/%
+        cmake.exe -G"Visual Studio 18 2026" ^
+        -DCMAKE_BUILD_TYPE=Release ^
+        -DBUILD_SHARED_LIBS=OFF ^
+        -B./cmake-build &&^
+        cd cmake-build && cmake --build . --config Release --target ALL_BUILD -v -- /maxcpucount
+        
+    - name: set PATH, check mingw version, cmake generate, build and install
+      shell: cmd
+      run: |
+        dir /S
+      
     - name: Archive Release
       uses: thedoctor0/zip-release@master
       with:
