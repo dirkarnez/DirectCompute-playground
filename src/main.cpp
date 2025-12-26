@@ -600,11 +600,11 @@ HRESULT FindDXSDKShaderFileCch( WCHAR* strDestPath,
     //      %EXE_DIR%\..\..\%EXE_NAME%
 
     wcscpy_s( strDestPath, cchDest, strFilename );
-    if( GetFileAttributes( strDestPath ) != 0xFFFFFFFF )
+    if( GetFileAttributesW( strDestPath ) != 0xFFFFFFFF )
         return S_OK;
 
     swprintf_s( strDestPath, cchDest, L"%s\\..\\..\\%s\\%s", strExePath, strExeName, strFilename );
-    if( GetFileAttributes( strDestPath ) != 0xFFFFFFFF )
+    if( GetFileAttributesW( strDestPath ) != 0xFFFFFFFF )
         return S_OK;    
 
     // On failure, return the file as the path but also return an error code
