@@ -1,0 +1,51 @@
+name: cpp-cmake-mingw-prebuilt-release-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'c*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+    contents: write
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-latest
+    env:
+      msvc2019TargetZip: or-tools-boilerplate-${{ github.ref_name }}-msvc2019.zip
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check cmake
+      run: cmake --version
+      
+    - name: set PATH, check mingw version, cmake generate, build and install
+      if: ${{ matrix.compiler.url }}
+      shell: cmd
+      run: |
+          set CD_LINUX=%CD:\=/%
+          cmake.exe -G"Visual Studio 18 2026" ^
+          -DCMAKE_BUILD_TYPE=Release ^
+          -DBUILD_SHARED_LIBS=OFF ^
+          -B./cmake-build &&^
+          cd cmake-build && cmake --build . --config Release --target ALL_BUILD -v -- /maxcpucount
+
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        type: 'zip'
+        directory: "cmake-build/Release"
+        filename: "${{ github.event.repository.name }}-${{ github.ref_name }}-msvc2026.zip"
+      
+    - name: Release prebuilt
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "cmake-build/Release/${{ github.event.repository.name }}-${{ github.ref_name }}-msvc2026.zip"
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
